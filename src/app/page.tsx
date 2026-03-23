@@ -1,3 +1,5 @@
+'use client'
+
 import Hero from '@/components/sections/Hero'
 import IndustriesGrid from '@/components/sections/IndustriesGrid'
 import ServicesGrid from '@/components/sections/ServicesGrid'
@@ -5,16 +7,21 @@ import ProcessTimeline from '@/components/sections/ProcessTimeline'
 import ValueProposition from '@/components/sections/ValueProposition'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import CTABanner from '@/components/sections/CTABanner'
+import { useLanguage } from '@/lib/i18n'
+import { HOME } from '@/lib/translations'
 
 export default function HomePage() {
+  const { locale } = useLanguage()
+  const t = HOME[locale]
+
   return (
     <>
       <Hero
-        eyebrow="Stellar Labor Professional Services"
-        title="The Workforce Behind High-Stakes Operations"
-        subtitle="Precision staffing for industrial, energy, and construction sectors. Skilled trades and labor solutions deployed across North America — operationally ready, safety certified, on time."
-        primaryCta={{ label: 'Request Talent', href: '/employers' }}
-        secondaryCta={{ label: 'Find Work', href: '/talent' }}
+        eyebrow={t.eyebrow}
+        title={t.title}
+        subtitle={t.subtitle}
+        primaryCta={{ label: t.primaryCta, href: '/employers' }}
+        secondaryCta={{ label: t.secondaryCta, href: '/talent' }}
         variant="home"
       />
 
@@ -29,10 +36,10 @@ export default function HomePage() {
       <TestimonialsSection />
 
       <CTABanner
-        title="Ready to Solve Your Workforce Challenge?"
-        subtitle="Whether you need 5 workers or 500, our team is ready to deploy qualified talent to your site."
-        primaryCta={{ label: 'Request Talent', href: '/employers' }}
-        secondaryCta={{ label: 'Contact Us', href: '/contact' }}
+        title={t.ctaTitle}
+        subtitle={t.ctaSubtitle}
+        primaryCta={{ label: t.ctaPrimary, href: '/employers' }}
+        secondaryCta={{ label: t.ctaSecondary, href: '/contact' }}
         variant="dark"
       />
     </>

@@ -4,7 +4,19 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import Link from 'next/link'
 import { NAV_LINKS } from '@/lib/constants'
+import { useLanguage } from '@/lib/i18n'
+import { NAV_LABELS } from '@/lib/translations'
 import Logo from '@/components/brand/Logo'
+
+const NAV_LABEL_MAP: Record<string, keyof typeof NAV_LABELS.en> = {
+  '/about': 'about',
+  '/industries': 'industries',
+  '/services': 'services',
+  '/employers': 'employers',
+  '/talent': 'talent',
+  '/safety': 'safety',
+  '/contact': 'contact',
+}
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -12,6 +24,9 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const { locale } = useLanguage()
+  const labels = NAV_LABELS[locale]
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -48,7 +63,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={onClose}
                   className="block py-4 text-2xl font-serif text-ink border-b border-stone hover:text-emerald transition-colors"
                 >
-                  {link.label}
+                  {labels[NAV_LABEL_MAP[link.href]] || link.label}
                 </Link>
               </motion.div>
             ))}
@@ -64,14 +79,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 onClick={onClose}
                 className="flex items-center justify-center px-7 py-4 bg-ink text-cream font-medium text-base rounded-full"
               >
-                Request Talent
+                {labels.requestTalent}
               </Link>
               <Link
                 href="/talent"
                 onClick={onClose}
                 className="flex items-center justify-center px-7 py-4 border border-ink/20 text-ink font-medium text-base rounded-full"
               >
-                Find Work
+                {labels.findWork}
               </Link>
             </motion.div>
           </nav>

@@ -1,6 +1,7 @@
 'use client'
 
-import { SERVICES } from '@/lib/constants'
+import { useLanguage } from '@/lib/i18n'
+import { SERVICES_DATA, SERVICES_GRID } from '@/lib/translations'
 import SectionContainer from '@/components/ui/SectionContainer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StaggerChildren, { StaggerItem } from '@/components/motion/StaggerChildren'
@@ -13,14 +14,17 @@ interface ServicesGridProps {
 }
 
 export default function ServicesGrid({ showLink = true, limit }: ServicesGridProps) {
-  const services = limit ? SERVICES.slice(0, limit) : SERVICES
+  const { locale } = useLanguage()
+  const labels = SERVICES_GRID[locale]
+  const allServices = SERVICES_DATA[locale]
+  const services = limit ? allServices.slice(0, limit) : allServices
 
   return (
     <SectionContainer className="bg-ink" padding="xl">
       <SectionHeading
-        eyebrow="Services"
-        title="Comprehensive Workforce Solutions"
-        subtitle="From skilled trades to general labor, contract staffing to permanent placement — every service engineered for operational excellence."
+        eyebrow={labels.eyebrow}
+        title={labels.title}
+        subtitle={labels.subtitle}
         dark
       />
       <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
@@ -49,7 +53,7 @@ export default function ServicesGrid({ showLink = true, limit }: ServicesGridPro
             href="/services"
             className="text-sm font-medium text-cream hover:text-emerald-light transition-colors"
           >
-            View all services
+            {labels.viewLink}
           </Link>
         </div>
       )}

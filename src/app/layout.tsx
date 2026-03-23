@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, DM_Serif_Display } from 'next/font/google'
 import './globals.css'
+import { LanguageProvider } from '@/lib/i18n'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 
@@ -41,9 +42,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${dmSerif.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   )

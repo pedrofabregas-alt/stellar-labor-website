@@ -1,6 +1,7 @@
 'use client'
 
-import { INDUSTRIES } from '@/lib/constants'
+import { useLanguage } from '@/lib/i18n'
+import { INDUSTRIES_DATA, INDUSTRIES_GRID } from '@/lib/translations'
 import SectionContainer from '@/components/ui/SectionContainer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import StaggerChildren, { StaggerItem } from '@/components/motion/StaggerChildren'
@@ -21,16 +22,19 @@ interface IndustriesGridProps {
 }
 
 export default function IndustriesGrid({ showLink = true, limit }: IndustriesGridProps) {
-  const industries = limit ? INDUSTRIES.slice(0, limit) : INDUSTRIES
+  const { locale } = useLanguage()
+  const labels = INDUSTRIES_GRID[locale]
+  const allIndustries = INDUSTRIES_DATA[locale]
+  const industries = limit ? allIndustries.slice(0, limit) : allIndustries
 
   return (
     <SectionContainer className="bg-cream">
       <SectionHeading
-        eyebrow="Industries"
-        title="Deep Expertise Where It Matters Most"
-        subtitle="Specialized workforce solutions across North America's most demanding industrial and operational sectors."
+        eyebrow={labels.eyebrow}
+        title={labels.title}
+        subtitle={labels.subtitle}
       />
-      <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone rounded-2xl overflow-hidden border border-stone">
+      <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-stone rounded-2xl overflow-hidden border border-stone">
         {industries.map((industry) => {
           const Icon = getIcon(industry.icon)
           return (
@@ -58,7 +62,7 @@ export default function IndustriesGrid({ showLink = true, limit }: IndustriesGri
             href="/industries"
             className="text-sm font-medium text-ink hover:text-emerald transition-colors"
           >
-            Explore all industries we serve
+            {labels.exploreLink}
           </Link>
         </div>
       )}

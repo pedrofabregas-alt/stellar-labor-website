@@ -1,20 +1,25 @@
 'use client'
 
-import { TESTIMONIALS } from '@/lib/constants'
+import { useLanguage } from '@/lib/i18n'
+import { TESTIMONIALS_DATA, TESTIMONIALS_SECTION } from '@/lib/translations'
 import SectionContainer from '@/components/ui/SectionContainer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import FadeIn from '@/components/motion/FadeIn'
 import StarMotif from '@/components/brand/StarMotif'
 
 export default function TestimonialsSection() {
+  const { locale } = useLanguage()
+  const labels = TESTIMONIALS_SECTION[locale]
+  const testimonials = TESTIMONIALS_DATA[locale]
+
   return (
     <SectionContainer className="bg-warm-white" padding="xl">
       <SectionHeading
-        eyebrow="Testimonials"
-        title="Trusted by Industry Leaders"
+        eyebrow={labels.eyebrow}
+        title={labels.title}
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {TESTIMONIALS.map((t, i) => (
+        {testimonials.map((t, i) => (
           <FadeIn key={i} delay={i * 0.15}>
             <div className="bg-cream rounded-2xl p-8 lg:p-10 border border-stone h-full flex flex-col">
               {/* Quote mark */}

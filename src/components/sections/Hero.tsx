@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Button from '@/components/ui/Button'
 import StarMotif from '@/components/brand/StarMotif'
 import CountUp from '@/components/motion/CountUp'
+import { useLanguage } from '@/lib/i18n'
+import { HOME } from '@/lib/translations'
 import { ease } from '@/lib/animations'
 
 const fadeUp = (delay: number) => ({
@@ -91,6 +93,9 @@ function HomeHero({
   primaryCta,
   secondaryCta,
 }: Omit<HeroProps, 'variant'>) {
+  const { locale } = useLanguage()
+  const homeLabels = HOME[locale]
+
   return (
     <section className="relative min-h-screen flex items-center bg-cream overflow-hidden">
       {/* Decorative background */}
@@ -176,7 +181,7 @@ function HomeHero({
                         <CountUp target={30} suffix="+" />
                       </div>
                       <p className="text-[10px] sm:text-xs font-medium tracking-[0.1em] uppercase text-white/60 mt-1">
-                        Years
+                        {homeLabels.stats.years}
                       </p>
                     </div>
                     <div>
@@ -184,7 +189,7 @@ function HomeHero({
                         <CountUp target={10} suffix="k+" />
                       </div>
                       <p className="text-[10px] sm:text-xs font-medium tracking-[0.1em] uppercase text-white/60 mt-1">
-                        Workers
+                        {homeLabels.stats.workers}
                       </p>
                     </div>
                     <div>
@@ -192,7 +197,7 @@ function HomeHero({
                         <CountUp target={98} suffix="%" />
                       </div>
                       <p className="text-[10px] sm:text-xs font-medium tracking-[0.1em] uppercase text-white/60 mt-1">
-                        Retention
+                        {homeLabels.stats.retention}
                       </p>
                     </div>
                     <div>
@@ -200,7 +205,7 @@ function HomeHero({
                         <CountUp target={38} />
                       </div>
                       <p className="text-[10px] sm:text-xs font-medium tracking-[0.1em] uppercase text-white/60 mt-1">
-                        States
+                        {homeLabels.stats.states}
                       </p>
                     </div>
                   </div>
@@ -219,7 +224,7 @@ function HomeHero({
                 transition={{ delay: 0.8, duration: 0.6, ease }}
                 className="absolute -bottom-4 -left-4 bg-emerald text-white px-5 py-3 rounded-xl shadow-lg"
               >
-                <p className="text-xs font-semibold tracking-wide uppercase">North America Coverage</p>
+                <p className="text-xs font-semibold tracking-wide uppercase">{homeLabels.northAmericaCoverage}</p>
               </motion.div>
             </motion.div>
           </div>

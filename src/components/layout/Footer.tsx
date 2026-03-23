@@ -1,10 +1,18 @@
+'use client'
+
 import Link from 'next/link'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { COMPANY, FOOTER_LINKS } from '@/lib/constants'
+import { useLanguage } from '@/lib/i18n'
+import { FOOTER_LABELS, NAV_LABELS } from '@/lib/translations'
 import Logo from '@/components/brand/Logo'
 import StarMotif from '@/components/brand/StarMotif'
 
 export default function Footer() {
+  const { locale } = useLanguage()
+  const labels = FOOTER_LABELS[locale]
+  const nav = NAV_LABELS[locale]
+
   return (
     <footer className="bg-ink">
       {/* Main footer */}
@@ -16,7 +24,7 @@ export default function Footer() {
               <Logo variant="light" showSubtitle className="h-10 w-auto" />
             </Link>
             <p className="text-stone-dark text-sm leading-relaxed mb-8 max-w-xs">
-              Precision workforce solutions for industrial, energy, and construction sectors across North America.
+              {labels.tagline}
             </p>
             <div className="space-y-3">
               <a href={`tel:${COMPANY.phone}`} className="flex items-center gap-3 text-sm text-stone-dark hover:text-cream transition-colors">
@@ -36,43 +44,61 @@ export default function Footer() {
 
           {/* Company */}
           <div className="lg:col-span-2 lg:col-start-6">
-            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">Company</h3>
+            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">{labels.company}</h3>
             <ul className="space-y-3">
-              {FOOTER_LINKS.company.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-stone-dark hover:text-cream transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {FOOTER_LINKS.company.map((link) => {
+                const labelMap: Record<string, string> = {
+                  '/about': nav.about,
+                  '/safety': nav.safety,
+                  '/faq': locale === 'es' ? 'Preguntas Frecuentes' : 'FAQ',
+                  '/contact': nav.contact,
+                }
+                return (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-stone-dark hover:text-cream transition-colors">
+                      {labelMap[link.href] || link.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
           {/* Solutions */}
           <div className="lg:col-span-2">
-            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">Solutions</h3>
+            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">{labels.solutions}</h3>
             <ul className="space-y-3">
-              {FOOTER_LINKS.solutions.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-stone-dark hover:text-cream transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {FOOTER_LINKS.solutions.map((link) => {
+                const labelMap: Record<string, string> = {
+                  '/services': nav.services,
+                  '/industries': nav.industries,
+                  '/employers': nav.employers,
+                }
+                return (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-stone-dark hover:text-cream transition-colors">
+                      {labelMap[link.href] || link.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
           {/* Talent */}
           <div className="lg:col-span-2">
-            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">Talent</h3>
+            <h3 className="text-xs font-semibold text-cream uppercase tracking-[0.15em] mb-5">{labels.talent}</h3>
             <ul className="space-y-3">
-              {FOOTER_LINKS.talent.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-stone-dark hover:text-cream transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/talent" className="text-sm text-stone-dark hover:text-cream transition-colors">
+                  {labels.careers}
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent#apply" className="text-sm text-stone-dark hover:text-cream transition-colors">
+                  {labels.applyNow}
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -82,7 +108,7 @@ export default function Footer() {
       <div className="border-t border-white/8">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-stone-dark">
-            &copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {COMPANY.name}. {labels.allRights}
           </p>
           <div className="flex items-center gap-2">
             <StarMotif size={12} className="text-emerald/40" />
