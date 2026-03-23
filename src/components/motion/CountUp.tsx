@@ -12,7 +12,7 @@ interface CountUpProps {
 
 export default function CountUp({ target, suffix = '', duration = 2, className }: CountUpProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true })
   const [count, setCount] = useState(0)
 
   useEffect(() => {
